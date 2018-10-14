@@ -22,7 +22,11 @@ export const fetchSongsError = () => {
 
 export const fetchSongs = (accessToken) => {
   return dispatch => {
-    const request = new Request(`https://api.spotify.com/v1/me/tracks?limit=50`, {
+    const url = new URL(`https://api.spotify.com/v1/me/tracks`);
+    const params = url.searchParams;
+    params.set('limit', 50);
+
+    const request = new Request(url, {
       headers: new Headers({
         'Authorization': 'Bearer ' + accessToken
       })

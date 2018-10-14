@@ -1,11 +1,16 @@
 const defaultState = {
   fetchSongsPending: true,
+  songId: 0,
+  songPaused: true,
   songPlaying: false,
   timeElapsed: 0,
-  songId: 0,
-  viewType:'songs',
-  songPaused: true
+  viewType:'songs'
 };
+
+export const processSongs = (songs) => ({
+  songs,
+  total: songs.length
+});
 
 export const songsReducer = (state = defaultState, action) => {
 
@@ -24,13 +29,11 @@ export const songsReducer = (state = defaultState, action) => {
     };
 
   case "FETCH_SONGS_SUCCESS":
-    return {
-      ...state,
-      songs: action.songs,
+    return Object.assign({}, state, processSongs(action.songs), {
       fetchSongsError: false,
       fetchSongsPending: false,
       viewType: 'songs'
-    };
+    });
 
   case "FETCH_SONGS_ERROR":
     return {
@@ -46,13 +49,11 @@ export const songsReducer = (state = defaultState, action) => {
     };
 
   case "SEARCH_SONGS_SUCCESS":
-    return {
-      ...state,
-      songs: action.songs,
+    return Object.assign({}, state, processSongs(action.songs), {
       searchSongsError: false,
       searchSongsPending: false,
       viewType: 'search'
-    };
+    });
 
   case "SEARCH_SONGS_ERROR":
     return {
@@ -68,13 +69,11 @@ export const songsReducer = (state = defaultState, action) => {
     };
 
   case "FETCH_RECENTLY_PLAYED_SUCCESS":
-    return {
-      ...state,
-      songs: action.songs,
+    return Object.assign({}, state, processSongs(action.songs), {
       viewType: 'Recently Played',
       fetchSongsError: false,
       fetchSongsPending: false
-    };
+    });
 
   case "FETCH_RECENTLY_PLAYED_ERROR":
     return {
@@ -90,13 +89,11 @@ export const songsReducer = (state = defaultState, action) => {
     };
 
   case "FETCH_PLAYLIST_SONGS_SUCCESS":
-    return {
-      ...state,
-      songs: action.songs,
+    return Object.assign({}, state, processSongs(action.songs), {
       viewType: 'playlist',
       fetchPlaylistSongsError: false,
       fetchPlaylistSongsPending: false
-    };
+    });
 
   case "FETCH_PLAYLIST_SONGS_ERROR":
     return {
@@ -112,13 +109,11 @@ export const songsReducer = (state = defaultState, action) => {
     };
 
   case "FETCH_ARTIST_SONGS_SUCCESS":
-    return {
-      ...state,
-      songs: action.songs,
+    return Object.assign({}, state, processSongs(action.songs), {
       viewType: 'Artist',
       fetchArtistSongsError: false,
       fetchArtistSongsPending: false
-    };
+    });
 
   case "FETCH_ARTIST_SONGS_ERROR":
     return {

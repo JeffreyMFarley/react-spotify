@@ -92,7 +92,13 @@ class SongList extends Component {
         {
           this.props.songs && !this.props.fetchSongsPending && !this.props.fetchPlaylistSongsPending && this.renderSongs()
         }
-
+        {this.props.total >= 50 && (
+          <div>
+            <p className='load-more'>
+              <i className="fa fa-ellipsis-h" aria-hidden="true"/>
+            </p>
+          </div>
+        )}
       </div>
     );
   }
@@ -110,6 +116,7 @@ SongList.propTypes = {
     PropTypes.string,
     PropTypes.array
   ]),
+  total: PropTypes.number,
   fetchSongsError: PropTypes.bool,
   fetchSongsPending: PropTypes.bool,
   fetchPlaylistSongsPending: PropTypes.bool,
